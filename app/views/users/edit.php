@@ -19,9 +19,12 @@
             <?php i('power-off', 'left') . _l('logout') ?>
           </a>
           <?php elseif($user->email()): ?>
-          <a href="mailto:<?php echo $user->email() ?>">
-            <?php i('envelope-square', 'left') . _l('users.form.options.message') ?>
-          </a>
+            <?php
+              $href = $user->current()->isAdmin() ? "email" : "mailto:$user->email";
+            ?>
+            <a href="<?= $href; ?>">
+              <?php i('envelope-square', 'left') . _l('users.form.options.message') ?>
+            </a>
           <?php endif ?>
         </li>
 
