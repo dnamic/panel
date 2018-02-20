@@ -4,6 +4,7 @@ namespace Kirby\Panel\Models\Page;
 
 use Error;
 use Exception;
+use C;
 use F;
 use Str;
 use Kirby\Panel\Event;
