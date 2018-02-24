@@ -149,8 +149,7 @@ class Menu {
       return $this->item('file', 'createSingleGroup', array(
         'href'          => $createFiles,
         'title'         => 'c',
-        'data-shortcut' => 'c',
-        'data-modal'    => true,
+        'data-shortcut' => 'c'
       ));
 
 
