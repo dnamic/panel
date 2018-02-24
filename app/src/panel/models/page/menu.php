@@ -146,7 +146,7 @@ class Menu {
     if($createFiles && $this->page->hasFiles()) {
       $this->isEmpty = false;
 
-      return $this->item('file', 'createSingleGroup', array(
+      return $this->item('file', 'Generate files', array(
         'href'          => $createFiles,
         'title'         => 'c',
         'data-shortcut' => 'c'
