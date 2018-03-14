@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kirby\Panel\Models\Page;
 
@@ -35,11 +35,11 @@ class Menu {
 
   public function modalUrl($action) {
 
-    if($this->position == 'context') {    
+    if($this->position == 'context') {
       if($this->parent->isSite()) {
         $redirect = '/';
       } else {
-        $redirect = $this->parent->uri('edit');        
+        $redirect = $this->parent->uri('edit');
       }
       return $this->page->url($action) . '?_redirect=' . $redirect;
     } else {
@@ -48,7 +48,7 @@ class Menu {
 
   }
 
-  public function previewOption() {  
+  public function previewOption() {
 
     $preview = $this->page->url('preview');
 
@@ -69,14 +69,14 @@ class Menu {
 
   }
 
-  public function editOption() {  
+  public function editOption() {
 
     if($this->position == 'context') {
       $this->isEmpty = false;
 
       return $this->item('pencil', 'pages.show.subpages.edit', array(
         'href' => $this->page->url('edit'),
-      ));      
+      ));
     }
 
   }
@@ -92,7 +92,7 @@ class Menu {
         $label = 'pages.show.invisible';
       } else {
         $icon  = 'toggle-on';
-        $label = 'pages.show.visible';      
+        $label = 'pages.show.visible';
       }
 
       return $this->item($icon, $label, array(
@@ -104,9 +104,9 @@ class Menu {
       return false;
     }
 
-  } 
+  }
 
-  public function templateOption() {  
+  public function templateOption() {
 
     if($this->page->ui()->template()) {
       $this->isEmpty = false;
@@ -116,7 +116,7 @@ class Menu {
         'data-modal'    => true,
         'data-shortcut' => 't',
       ));
-    } else {      
+    } else {
       return false;
     }
 
@@ -132,7 +132,27 @@ class Menu {
         'title'         => 'u',
         'data-shortcut' => 'u',
         'data-modal'    => true,
-      ));      
+      ));
+    } else {
+      return false;
+    }
+
+  }
+
+  public function singleFilesOption() {
+
+    $createFiles = $this->page->url('createSingleFiles');
+
+    if($createFiles && $this->page->hasFiles()) {
+      $this->isEmpty = false;
+
+      return $this->item('file', 'Generate files', array(
+        'href'          => $createFiles,
+        'title'         => 'c',
+        'data-shortcut' => 'c'
+      ));
+
+
     } else {
       return false;
     }
@@ -170,6 +190,7 @@ class Menu {
     $list->append($this->templateOption());
     $list->append($this->urlOption());
     $list->append($this->deleteOption());
+    $list->append($this->singleFilesOption());
 
     if($this->position == 'context') {
       return '<nav class="dropdown dropdown-dark contextmenu">' . $list . '</nav>';
@@ -185,7 +206,7 @@ class Menu {
 
   public function __toString() {
     try {
-      return (string)$this->html();      
+      return (string)$this->html();
     } catch(Exception $e) {
       return (string)$e->getMessage();
     }

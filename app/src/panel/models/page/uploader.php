@@ -4,6 +4,7 @@ namespace Kirby\Panel\Models\Page;
 
 use Error;
 use Exception;
+use C;
 use F;
 use Str;
 use Kirby\Panel\Event;
@@ -135,7 +136,12 @@ class Uploader {
   public function checkUpload($file) {
 
     $filesettings        = $this->blueprint->files();
+
     $forbiddenExtensions = array('php', 'html', 'htm', 'exe', kirby()->option('content.file.extension', 'txt'));
+    $forbiddenOpt = c::get('forbiddenExtensions');
+    if($forbiddenOpt){
+      $forbiddenExtensions = array_merge($forbiddenExtensions, $forbiddenOpt);
+    }
     $forbiddenMimes      = array_merge(f::$mimes['php'], array('text/html', 'application/x-msdownload'));
     $extension           = strtolower($file->extension());
 
