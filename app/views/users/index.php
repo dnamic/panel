@@ -2,7 +2,7 @@
 
   <h2 class="hgroup hgroup-single-line cf">
     <span class="hgroup-title">
-      <?php _l('users.index.headline') ?> 
+      <?php _l('users.index.headline') ?>
       <span class="counter">( <?php echo $users->pagination()->items() ?> )</span>
     </span>
     <?php if(panel()->user()->ui()->create()): ?>
@@ -30,7 +30,11 @@
               <?php if($user->email()): ?>
                 <span style="padding-right: 1em"><?php __($user->email()) ?></span>
               <?php endif ?>
-              <span style="padding-right: 1em; font-style: italic; font-size: .9em; color: #aaa"><?php __($user->role()->name()) ?></span>
+              <?php $rolStyles = 'padding-right: 1em; font-style: italic; font-size: .9em; '; ?>
+              <?php
+                $rolStyles .= $user->role() == 'prelogin' ? 'color: #ff0000;' : 'color: #aaa;';
+              ?>
+              <span style="<?= $rolStyles; ?>"><?php __($user->role()->name()) ?></span>
               <?php if(!$user->password()): ?>
                 <span style="font-style: italic; font-size: .9em; color: #aaa"><?php _l('users.index.passwordless') ?></span>
               <?php endif ?>
@@ -42,7 +46,7 @@
       <nav class="item-options">
 
         <ul class="nav nav-bar">
-          
+
           <li>
             <?php if($read && $user->ui()->update()): ?>
             <a class="btn btn-with-icon" href="<?php __($user->url('edit')) ?>">
